@@ -29,7 +29,7 @@ sd(datos$Ingreso)
 ##Gráfico de dispersión de ingreso 
 plot(x=datos$Ingreso)
 
-## Gráfico de tabla de ingreso vs comuna
+## Gráfico de frecuencia de trabajadores
 hist(x=datos$Trabajadores)
 
 ## Calculo de la mediana
@@ -56,5 +56,23 @@ datos$error <-  abs(datos$Ingreso-median(datos$Ingreso))
 ## Creamos valores de Z
 datos$ValorZ <- datos$error/median(datos$error)
 
-## Creamos una nueva columna para ingresar Valor Z
-View(datos)
+##Mediana de la muestra
+median(datos$Ingreso)
+
+##Mediana del error
+median(datos$error)
+
+#Buscamos los datos para outiliers con un filtro asignandóle un 4.5 (valor del Z) al corte
+datos[which(datos$ValorZ >= 4.5),names(datos)]
+## de usar este se quitarían 263 registros
+
+## Después de analizar existen muchos valores cercanos al 4.5 por lo que se actualiza a 5
+
+datos2 <- datos[which(datos$ValorZ >= 5),names(datos)]
+
+##Vemos los datos actualizados 
+summary(datos2)
+
+
+
+
