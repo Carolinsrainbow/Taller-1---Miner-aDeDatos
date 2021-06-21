@@ -30,7 +30,7 @@ sd(datos$Ingreso)
 plot(x=datos$Ingreso)
 
 ## Gráfico de tabla de ingreso vs comuna
-hist(datos$Comuna)
+hist(x=datos$Trabajadores)
 
 ## Calculo de la mediana
 median(datos$Ingreso)
@@ -46,11 +46,15 @@ cor(datos$Ingreso, datos$Trabajadores)
 
 ## Calculo de cuartiles 
 quantile(datos$Ingreso)
+plot(x=quantile(datos$Ingreso))
 
 ## Valor Z robusto
 
 ## Creamos una nueva columna 
 datos$error <-  abs(datos$Ingreso-median(datos$Ingreso))
+
+## Creamos valores de Z
+datos$ValorZ <- datos$error/median(datos$error)
 
 ## Creamos una nueva columna para ingresar Valor Z
 View(datos)
