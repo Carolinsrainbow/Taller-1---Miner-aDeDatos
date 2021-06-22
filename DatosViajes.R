@@ -88,6 +88,18 @@ datosPercentiles <- datos[!datos %in% datosAtipicos$out]
 
 
 #### REVISIÓN MÉTODO INTERVALOS DE VARIABILIDAD
+mean(datos$Ingreso)
+sd(datos$Ingreso)
+
+## Intervalo que involucra el 75% de los datos δ = 2
+intervalo2 <- mean(datos$Ingreso) + 2*(sd(datos$Ingreso))
+
+## Intervalo que involucra el 88,9% de los datos δ = 3
+intervalo3 <- mean(datos$Ingreso) + 3*(sd(datos$Ingreso))
+
+## Intervalo que involucra el 93,8% de los datos δ = 4
+intervalo4 <- mean(datos$Ingreso) + 4*(sd(datos$Ingreso))
+
 
 #### REVISION MÉTODO DE VALOR Z ROBUSTO 
 
