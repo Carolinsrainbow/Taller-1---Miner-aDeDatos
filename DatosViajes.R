@@ -100,6 +100,22 @@ intervalo3 <- mean(datos$Ingreso) + 3*(sd(datos$Ingreso))
 ## Intervalo que involucra el 93,8% de los datos δ = 4
 intervalo4 <- mean(datos$Ingreso) + 4*(sd(datos$Ingreso))
 
+## Creación de variables con los datos candidatos a outlinier
+DatosOutIntervalo2 < - datos[which(datos$Ingreso > intervalo2),names(datos)]
+DatosOutIntervalo3 < - datos[which(datos$Ingreso > intervalo3),names(datos)]
+DatosOutIntervalo4 < - datos[which(datos$Ingreso > intervalo4),names(datos)]
+
+## Datos restantes de la muestra 
+datosIntervalo2 <-  datos[which(datos$Ingreso < intervalo2),names(datos)]
+datosIntervalo3 <-  datos[which(datos$Ingreso < intervalo3),names(datos)]
+datosIntervalo4 <-  datos[which(datos$Ingreso < intervalo4),names(datos)]
+
+## Actualización de la correlación con respecto a los intervalos
+
+### Correlación trabajadores 
+cor(datosIntervalo2$Trabajadores,datosIntervalo2$Ingreso)
+cor(datosIntervalo3$Trabajadores,datosIntervalo3$Ingreso)
+cor(datosIntervalo4$Trabajadores,datosIntervalo4$Ingreso)
 
 #### REVISION MÉTODO DE VALOR Z ROBUSTO 
 
