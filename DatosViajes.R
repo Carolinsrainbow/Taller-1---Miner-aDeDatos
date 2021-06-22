@@ -82,11 +82,12 @@ datosAtipicos <- boxplot(datos$Ingreso,
 datosAtipicos$out
 
 ## Eliminamos los datos atipicos
-
 datosPercentiles <- datos[!datos %in% datosAtipicos$out]
 
 ## Gráfico de percentiles 
 
+
+#### REVISIÓN MÉTODO INTERVALOS DE VARIABILIDAD
 
 #### REVISION MÉTODO DE VALOR Z ROBUSTO 
 
