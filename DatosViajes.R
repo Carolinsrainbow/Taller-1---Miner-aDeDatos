@@ -171,7 +171,6 @@ median(datos$error)
 datos[which(datos$ValorZ >=4.5),names(datos)]
 ## de usar este se quitarían 263 registros
 
-datos[which(datos$ValorZ >=4.5),names(datos)]
 
 ## Después de analizar existen muchos valores cercanos al 4.5 por lo que se actualiza a 5
 
@@ -186,16 +185,17 @@ summary(datos2)
 plot(x=datos2$Ingreso)
 
 ## Gráfico de frecuencia de trabajadores
-hist(x=datos2$Trabajadores)
+hist(datos2$Ingreso, freq = T, main="Histograma de la distribución de Ingreso PRZ")
 
 ## Correlación abuelos vs viajes 
+cor(datos$AdultoMayores, datos$Viajes)
 cor(datos2$AdultoMayores, datos2$Viajes)
 
 ## Correlación trabajadores vs viajes
+cor(datos$Trabajadores, datos$Viajes)
 cor(datos2$Trabajadores, datos2$Viajes)
 
-## Correlacion trabajores vs ingreso
+
+## Correlación trabajores vs ingreso
+cor(datos$Ingreso, datos$Trabajadores)
 cor(datos2$Ingreso, datos2$Trabajadores)
-
-
-
