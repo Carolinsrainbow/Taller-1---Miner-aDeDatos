@@ -1,7 +1,6 @@
 ## Minería de Datos
 ## Carolina Herrera Azolas 
 
-
 ## Incorporación de los datos a la biblioteca 
 datos <- read.csv("/Users/user/Desktop/DatosViajes.csv",sep=";", header=TRUE)
 
@@ -42,7 +41,6 @@ sd(datos$Viajes)
 ##Calculo de coeficiente de variación para viajes
 cvViajes <- sd(datos$Viajes)/mean(datos$Viajes)
 
-
 ## Calculo de coeficiente de variación para el ingreso
 cvIngreso <- sd(datos$Ingreso)/mean(datos$Ingreso)
 
@@ -55,6 +53,9 @@ hist(x=datos$Trabajadores)
 ## Calculo de la mediana
 median(datos$Ingreso)
 
+## Histograma distribución de ingreso
+hist(datos$Ingreso, breaks = seq(0,11400000, by=200000), freq = T, main="Histograma de la distribución de ingreso")
+
 ## Correlación abuelos vs viajes 
 cor(datos$AdultoMayores, datos$Viajes)
 
@@ -64,8 +65,8 @@ cor(datos$Trabajadores, datos$Viajes)
 ## Correlacion trabajores vs ingreso
 cor(datos$Ingreso, datos$Trabajadores)
 
-
 #### REVISION MÉTODOS DE PERCENTILES
+
 ## Calculo de cuartiles 
 boxplot(x=datos$Ingreso)
 quantile(datos$Ingreso)
@@ -74,18 +75,36 @@ plot(x=quantile(datos$Ingreso))
 ## Graficamos datos atipicos 
 
 datosAtipicos <- boxplot(datos$Ingreso, 
-        main = "Gráfico de Caja de distribución de Ingresos",
+        main = "Gráfico de Caja de distribución de Ingresos Originales",
         boxwex = 0.5,col="skyblue", frame.plot=F)
-
 
 ## Revisamos valores atipicos 
 datosAtipicos$out
+length(datosAtipicos$out)
+
+## Tabla de datos atipicos 
+datosSuciosPercentiles <- datos[(datos$Ingreso %in% datosAtipicos$out),]
 
 ## Eliminamos los datos atipicos
-datosPercentiles <- datos[!datos %in% datosAtipicos$out]
+datosLimpiosPercentiles <- datos[!(datos$Ingreso %in% datosAtipicos$out),]
 
 ## Gráfico de percentiles 
+datosPercentilSinOut <- boxplot(datosLimpiosPercentiles$Ingreso, 
+                                main = "Gráfico de Caja de distribución de Ingresos sin Out",
+                                boxwex = 0.5,col="pink", frame.plot=F)
 
+
+## Comparativo entre las Correlaciones de abuelos vs viajes 
+cor(datos$AdultoMayores, datos$Viajes)
+cor(datosLimpiosPercentiles$AdultoMayores, datosLimpiosPercentiles$Viajes)
+
+## Comparativo entre las Correlaciones de trabajadores vs viajes
+cor(datos$Trabajadores, datos$Viajes)
+cor(datosLimpiosPercentiles$Trabajadores, datosLimpiosPercentiles$Viajes)
+
+## Comparativo entre las Correlaciones de trabajores vs ingreso
+cor(datos$Ingreso, datos$Trabajadores)
+cor(datosLimpiosPercentiles$Ingreso, datosLimpiosPercentiles$Trabajadores)
 
 #### REVISIÓN MÉTODO INTERVALOS DE VARIABILIDAD
 mean(datos$Ingreso)
@@ -100,22 +119,39 @@ intervalo3 <- mean(datos$Ingreso) + 3*(sd(datos$Ingreso))
 ## Intervalo que involucra el 93,8% de los datos δ = 4
 intervalo4 <- mean(datos$Ingreso) + 4*(sd(datos$Ingreso))
 
-## Creación de variables con los datos candidatos a outlinier
-DatosOutIntervalo2 < - datos[which(datos$Ingreso > intervalo2),names(datos)]
-DatosOutIntervalo3 < - datos[which(datos$Ingreso > intervalo3),names(datos)]
-DatosOutIntervalo4 < - datos[which(datos$Ingreso > intervalo4),names(datos)]
 
-## Datos restantes de la muestra 
-datosIntervalo2 <-  datos[which(datos$Ingreso < intervalo2),names(datos)]
-datosIntervalo3 <-  datos[which(datos$Ingreso < intervalo3),names(datos)]
-datosIntervalo4 <-  datos[which(datos$Ingreso < intervalo4),names(datos)]
+##  Creación de variables con los datos candidatos a outlinier
+DatosOutIntervalo2 <-datos[which(datos$Ingreso > intervalo2),names(datos)]
+DatosOutIntervalo3 <-datos[which(datos$Ingreso > intervalo3),names(datos)]
+DatosOutIntervalo4 <-datos[which(datos$Ingreso > intervalo4),names(datos)]
+
+## Datos restantes de la muestra
+datosIntervalo2 <-datos[which(datos$Ingreso < intervalo2),names(datos)]
+datosIntervalo3 <-datos[which(datos$Ingreso < intervalo3),names(datos)]
+datosIntervalo4 <-datos[which(datos$Ingreso < intervalo4),names(datos)]
+
 
 ## Actualización de la correlación con respecto a los intervalos
 
-### Correlación trabajadores 
-cor(datosIntervalo2$Trabajadores,datosIntervalo2$Ingreso)
-cor(datosIntervalo3$Trabajadores,datosIntervalo3$Ingreso)
-cor(datosIntervalo4$Trabajadores,datosIntervalo4$Ingreso)
+## Comparativo entre las Correlaciones de abuelos vs viajes 
+cor(datos$AdultoMayores, datos$Viajes)
+cor(datosIntervalo2$AdultoMayores,datosIntervalo2$Viajes)
+cor(datosIntervalo3$AdultoMayores,datosIntervalo3$Viajes)
+cor(datosIntervalo4$AdultoMayores,datosIntervalo4$Viajes)
+
+## Comparativo entre las Correlaciones de trabajadores vs viajes
+cor(datos$Trabajadores, datos$Viajes)
+cor(datosIntervalo2$Trabajadores,datosIntervalo2$Viajes)
+cor(datosIntervalo3$Trabajadores,datosIntervalo3$Viajes)
+cor(datosIntervalo4$Trabajadores,datosIntervalo4$Viajes)
+
+
+## Comparativo entre las Correlaciones de trabajores vs ingreso
+cor(datos$Ingreso, datos$Trabajadores)
+cor(datosIntervalo2$Ingreso,datosIntervalo2$Trabajadores)
+cor(datosIntervalo3$Ingreso,datosIntervalo3$Trabajadores)
+cor(datosIntervalo4$Ingreso,datosIntervalo4$Trabajadores)
+
 
 #### REVISION MÉTODO DE VALOR Z ROBUSTO 
 
@@ -161,7 +197,5 @@ cor(datos2$Trabajadores, datos2$Viajes)
 ## Correlacion trabajores vs ingreso
 cor(datos2$Ingreso, datos2$Trabajadores)
 
-## Calculo de cuartiles 
-quantile(datos$Ingreso)
-quantile(datos2$Ingreso)
-plot(x=quantile(datos2$Ingreso))
+
+
